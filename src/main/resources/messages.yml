@@ -43,6 +43,7 @@ Messages:
   RemindingMessage: '&aYou are still invisible!'
   ListMessagePrefix: '&aInvisible Players:&f %l'
   ActionBarMessage: '&aYou are invisible to other players!'
+  ActionBarNotInVanishMessage: '&cYou are not vanished.'
   HideOtherMessage: '&aPlayer &e%other%&a is now invisible!'
   ShowOtherMessage: '&aPlayer &e%other%&a is now visible!'
   CannotHideOtherPlayer: '&cYou''re not allowed to change %other%''s visibility!'

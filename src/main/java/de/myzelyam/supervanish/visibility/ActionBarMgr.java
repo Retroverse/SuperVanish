@@ -13,6 +13,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import de.myzelyam.supervanish.LayeredPermissionChecker;
 import de.myzelyam.supervanish.SuperVanish;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -21,13 +22,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ActionBarMgr {
 
     private final SuperVanish plugin;
-    private final List<Player> actionBars = new ArrayList<>();
 
     public ActionBarMgr(SuperVanish plugin) {
         this.plugin = plugin;
@@ -39,21 +37,36 @@ public class ActionBarMgr {
 
             @Override
             public void run() {
-                for (Player p : actionBars) {
-                    try {
-                        sendActionBar(p, plugin.replacePlaceholders(plugin.getMessage("ActionBarMessage"), p));
-                    } catch (Exception | NoSuchMethodError | NoClassDefFoundError e) {
-                        cancel();
-                        plugin.logException(e);
-                        plugin.getLogger().warning("IMPORTANT: Please make sure that you are using the latest " +
-                                "dev-build of ProtocolLib and that your server is up-to-date! This error likely " +
-                                "happened inside of ProtocolLib code which is out of SuperVanish's control. It's part " +
-                                "of an optional feature module and can be removed safely by disabling " +
-                                "DisplayActionBar in the config file. Please report this " +
-                                "error if you can reproduce it on an up-to-date server with only latest " +
-                                "ProtocolLib and latest SV installed.");
+
+                if (!plugin.getSettings().getBoolean("MessageOptions.DisplayActionBar")) {
+                    return;
+                }
+
+                final LayeredPermissionChecker layeredPermissionChecker = plugin.getLayeredPermissionChecker();
+                if (layeredPermissionChecker == null) {
+                    return;
+                }
+
+                for (Player p : plugin.getServer().getOnlinePlayers()) {
+                    if (layeredPermissionChecker.hasPermissionToVanish(p)) {
+                        if (plugin.getVanishStateMgr().isVanished(p.getUniqueId())) {
+                            try {
+                                sendActionBar(p, plugin.replacePlaceholders(plugin.getMessage("ActionBarMessage"), p));
+                            } catch (Exception | NoSuchMethodError | NoClassDefFoundError e) {
+                                cancel();
+                                handleException(e);
+                            }
+                        } else {
+                            try {
+                                sendActionBar(p, plugin.replacePlaceholders(plugin.getMessage("ActionBarNotInVanishMessage"), p));
+                            } catch (Exception | NoSuchMethodError | NoClassDefFoundError e) {
+                                cancel();
+                                handleException(e);
+                            }
+                        }
                     }
                 }
+
             }
         }.runTaskTimer(plugin, 0, 2 * 20);
     }
@@ -84,11 +97,14 @@ public class ActionBarMgr {
         }
     }
 
-    public void addActionBar(Player p) {
-        actionBars.add(p);
-    }
-
-    public void removeActionBar(Player p) {
-        actionBars.remove(p);
+    private void handleException(Throwable throwable) {
+        plugin.logException(throwable);
+        plugin.getLogger().warning("IMPORTANT: Please make sure that you are using the latest " +
+                "dev-build of ProtocolLib and that your server is up-to-date! This error likely " +
+                "happened inside of ProtocolLib code which is out of SuperVanish's control. It's part " +
+                "of an optional feature module and can be removed safely by disabling " +
+                "DisplayActionBar in the config file. Please report this " +
+                "error if you can reproduce it on an up-to-date server with only latest " +
+                "ProtocolLib and latest SV installed.");
     }
 }

@@ -80,10 +80,6 @@ public class VisibilityChanger {
             if (config.getBoolean("InvisibilityFeatures.Fly.Enable")) {
                 player.setAllowFlight(true);
             }
-            // action bars
-            if (plugin.getActionBarMgr() != null && config.getBoolean("MessageOptions.DisplayActionBar")) {
-                plugin.getActionBarMgr().addActionBar(player);
-            }
             // sleep state
             player.setSleepingIgnored(true);
             // chat message
@@ -133,10 +129,6 @@ public class VisibilityChanger {
             for (Player onlinePlayer : Bukkit.getOnlinePlayers())
                 if (!plugin.hasPermissionToSee(onlinePlayer, player))
                     plugin.getVisibilityChanger().getHider().setHidden(player, onlinePlayer, false);
-            // action bars
-            if (plugin.getActionBarMgr() != null && config.getBoolean("MessageOptions.DisplayActionBar")) {
-                plugin.getActionBarMgr().removeActionBar(player);
-            }
             // sleep state
             player.setSleepingIgnored(false);
             // state

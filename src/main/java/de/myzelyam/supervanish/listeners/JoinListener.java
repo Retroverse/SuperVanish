@@ -55,11 +55,6 @@ public class JoinListener implements EventExecutor, Listener {
                     if (plugin.getSettings().getBoolean("MessageOptions.RemindVanishedOnJoin")) {
                         plugin.sendMessage(p, "RemindingMessage", p);
                     }
-                    // re-add action bar
-                    if (plugin.getActionBarMgr() != null && plugin.getSettings().getBoolean(
-                            "MessageOptions.DisplayActionBar")) {
-                        plugin.getActionBarMgr().addActionBar(p);
-                    }
                     // sleep state
                     p.setSleepingIgnored(true);
                     // adjust fly

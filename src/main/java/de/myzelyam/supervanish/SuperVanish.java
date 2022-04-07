@@ -12,9 +12,9 @@ import com.comphenix.protocol.ProtocolLibrary;
 import de.myzelyam.api.vanish.VanishAPI;
 import de.myzelyam.supervanish.commands.VanishCommand;
 import de.myzelyam.supervanish.config.ConfigMgr;
-import de.myzelyam.supervanish.listeners.*;
 import de.myzelyam.supervanish.features.FeatureMgr;
 import de.myzelyam.supervanish.hooks.PluginHookMgr;
+import de.myzelyam.supervanish.listeners.*;
 import de.myzelyam.supervanish.net.UpdateNotifier;
 import de.myzelyam.supervanish.utils.ExceptionLogger;
 import de.myzelyam.supervanish.utils.VersionUtil;
@@ -139,10 +139,6 @@ public class SuperVanish extends JavaPlugin implements SuperVanishPlugin {
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers())
                     if (!hasPermissionToSee(onlinePlayer, player))
                         visibilityChanger.getHider().setHidden(player, onlinePlayer, true);
-            }
-            if (getSettings().getBoolean("MessageOptions.DisplayActionBar")
-                    && vanished && actionBarMgr != null) {
-                actionBarMgr.addActionBar(player);
             }
         }
     }

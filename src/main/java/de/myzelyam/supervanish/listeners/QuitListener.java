@@ -11,7 +11,6 @@ package de.myzelyam.supervanish.listeners;
 import de.myzelyam.supervanish.SuperVanish;
 import de.myzelyam.supervanish.commands.CommandAction;
 import de.myzelyam.supervanish.features.Broadcast;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -36,11 +35,6 @@ public class QuitListener implements EventExecutor, Listener {
                 Player p = e.getPlayer();
                 // if is invisible
                 if (plugin.getVanishStateMgr().isVanished(p.getUniqueId())) {
-                    // remove action bar
-                    if (plugin.getActionBarMgr() != null && plugin.getSettings().getBoolean(
-                            "MessageOptions.DisplayActionBar")) {
-                        plugin.getActionBarMgr().removeActionBar(p);
-                    }
                     // check auto-reappear-option
                     boolean noMsg = false;
                     if (plugin.getSettings().getBoolean("VanishStateFeatures.ReappearOnQuit")
