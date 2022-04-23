@@ -10,29 +10,30 @@ package de.myzelyam.supervanish.visibility;
 
 import de.myzelyam.api.vanish.PlayerVanishStateChangeEvent;
 import de.myzelyam.supervanish.SuperVanish;
-
 import org.bukkit.Bukkit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 public class FileVanishStateMgr extends VanishStateMgr {
 
     private final SuperVanish plugin;
+    private Set<UUID> cachedVanishedPlayers;
 
     public FileVanishStateMgr(SuperVanish plugin) {
         super(plugin);
         this.plugin = plugin;
+        this.cachedVanishedPlayers = this.getVanishedPlayersOnFile();
     }
 
     @Override
     public boolean isVanished(final UUID uuid) {
-        return getVanishedPlayersOnFile().contains(uuid);
+        return isVanished(uuid, true);
+    }
+
+    @Override
+    public boolean isVanished(UUID uuid, boolean accessCache) {
+        return accessCache ? getCachedVanishedPlayers().contains(uuid) : getVanishedPlayersOnFile().contains(uuid);
     }
 
     @Override
@@ -102,4 +103,13 @@ public class FileVanishStateMgr extends VanishStateMgr {
                 vanishedPlayerUUIDStrings);
         plugin.getConfigMgr().getPlayerDataFile().save();
     }
+
+    public Set<UUID> getCachedVanishedPlayers() {
+        return cachedVanishedPlayers;
+    }
+
+    public void updateCache() {
+        this.cachedVanishedPlayers = getVanishedPlayersOnFile();
+    }
+
 }

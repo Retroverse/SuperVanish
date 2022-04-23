@@ -32,7 +32,7 @@ public class LoginListener implements Listener {
         try {
             if (e.getResult() != PlayerLoginEvent.Result.ALLOWED) return;
             final Player p = e.getPlayer();
-            boolean vanished = plugin.getVanishStateMgr().isVanished(p.getUniqueId());
+            boolean vanished = plugin.getVanishStateMgr().isVanished(p.getUniqueId(), false);
             boolean itemPickUps = plugin.getPlayerData().getBoolean(
                     "PlayerData." + p.getUniqueId() + ".itemPickUps",
                     plugin.getSettings().getBoolean("InvisibilityFeatures.DefaultPickUpItemsOption"));
@@ -55,7 +55,7 @@ public class LoginListener implements Listener {
 
             // hide others
             for (Player onlinePlayer : Bukkit.getOnlinePlayers())
-                if (plugin.getVanishStateMgr().isVanished(onlinePlayer.getUniqueId())
+                if (plugin.getVanishStateMgr().isVanished(onlinePlayer.getUniqueId(), false)
                         && !plugin.hasPermissionToSee(p, onlinePlayer))
                     plugin.getVisibilityChanger().getHider().setHidden(onlinePlayer, p, true);
         } catch (Exception er) {

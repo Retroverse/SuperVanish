@@ -35,7 +35,7 @@ public class JoinListener implements EventExecutor, Listener {
                 PlayerJoinEvent e = (PlayerJoinEvent) event;
                 final Player p = e.getPlayer();
                 // vanished:
-                if (plugin.getVanishStateMgr().isVanished(p.getUniqueId())) {
+                if (plugin.getVanishStateMgr().isVanished(p.getUniqueId(), false)) {
                     // hide self
                     for (Player onlinePlayer : Bukkit.getOnlinePlayers())
                         if (!plugin.hasPermissionToSee(onlinePlayer, p))
@@ -87,10 +87,13 @@ public class JoinListener implements EventExecutor, Listener {
                 }
                 // hide others
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers())
-                    if (plugin.getVanishStateMgr().isVanished(onlinePlayer.getUniqueId())
+                    if (plugin.getVanishStateMgr().isVanished(onlinePlayer.getUniqueId(), false)
                             && !plugin.hasPermissionToSee(p, onlinePlayer))
                         plugin.getVisibilityChanger().getHider().setHidden(onlinePlayer, p, true);
             }
+
+            plugin.getVanishStateMgr().updateCache();
+
         } catch (Exception er) {
             plugin.logException(er);
         }

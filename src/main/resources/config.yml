@@ -36,7 +36,7 @@ InvisibilityFeatures:
 VanishStateFeatures:
   # Should players with the permission 'sv.joinvanished' join vanished all the time?
   # Doesn't work if you use GroupManager for permissions
-  AutoVanishOnJoin: false
+  AutoVanishOnJoin: true
   # Should invisible players reappear automatically when they change their world?
   ReappearOnWorldChange: false
   # Should invisible players reappear automatically when they leave the server?
@@ -46,11 +46,11 @@ VanishStateFeatures:
   CheckPermissionOnWorldChange: false
   # Should invisible players reappear automatically
   # when they leave the server and don't have the permission 'sv.use' anymore?
-  CheckPermissionOnQuit: false
+  CheckPermissionOnQuit: true
   # Should invisible players reappear automatically
   # when they join the server and don't have the permission 'sv.use' anymore?
   # Doesn't work if you use GroupManager for permissions
-  CheckPermissionOnLogin: false
+  CheckPermissionOnLogin: true
 
 ############## Indication Features ###############
 IndicationFeatures:
@@ -75,13 +75,13 @@ MessageOptions:
   FakeJoinQuitMessages:
     # Should SV broadcast any kind of announcement (fake quit or player vanished) when a player vanishes?
     # You can change the messages in the messages.yml file.
-    BroadcastFakeQuitOnVanish: true
+    BroadcastFakeQuitOnVanish: false
     # Should SV broadcast any kind of announcement (fake join or player reappeared) when a player reappears?
     # You can change the messages in the messages.yml file.
-    BroadcastFakeJoinOnReappear: true
+    BroadcastFakeJoinOnReappear: false
     # Should players with the permission 'sv.see' get an admin announcement instead of a fake join/quit message?
     # You can change the messages in the messages.yml file.
-    AnnounceVanishReappearToAdmins: true
+    AnnounceVanishReappearToAdmins: false
     # Should there only be admin announcements and no fake join/quit messages?
     SendMessageOnlyToAdmins: false
     # Should there only be fake join/quit messages and no admin announcements?
@@ -100,7 +100,7 @@ MessageOptions:
   AnnounceDeathToAdmins: true
   # Should SV remind players who join the server vanished of being invisible (in chat)?
   # You can change the message in the messages.yml file.
-  RemindVanishedOnJoin: true
+  RemindVanishedOnJoin: false
   # Should invisible players have an action bar which tells them that they're invisible?
   # You can change the action bar in the messages.yml file.
   DisplayActionBar: true
@@ -109,13 +109,13 @@ MessageOptions:
 RestrictiveOptions:
   # Should invisible players not be able to break blocks?
   # Bypass permission: sv.breakblocks
-  PreventBlockBreaking: false
+  PreventBlockBreaking: true
   # Should invisible players not be able to place blocks?
   # Bypass permission: sv.placeblocks
   PreventBlockPlacing: false
   # Should invisible players not be able to damage players or mobs?
   # Bypass permission: sv.damage
-  PreventHittingEntities: false
+  PreventHittingEntities: true
 
 ############# External Invisibility ##############
 ExternalInvisibility:
@@ -169,9 +169,9 @@ MiscellaneousOptions:
 
   UpdateChecker:
     # Should SV check for updates on spigot regularly? There is no automatic update; this just informs you
-    Enable: true
+    Enable: false
     # Should players with the permission 'sv.notify' get notified if the current version of SV is outdated?
-    NotifyAdmins: true
+    NotifyAdmins: false
 
 ################# Do Not Touch ###################
 ConfigVersion: 6.2.7
