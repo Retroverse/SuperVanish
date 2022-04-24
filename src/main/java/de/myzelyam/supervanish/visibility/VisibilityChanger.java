@@ -105,6 +105,7 @@ public class VisibilityChanger {
             // call post event
             PostPlayerHideEvent e2 = new PostPlayerHideEvent(player, silent);
             plugin.getServer().getPluginManager().callEvent(e2);
+            plugin.getVanishStateMgr().updateCache();
         } catch (Exception e) {
             plugin.logException(e);
         }
@@ -157,6 +158,7 @@ public class VisibilityChanger {
             // call post event
             PostPlayerShowEvent e2 = new PostPlayerShowEvent(player, silent);
             plugin.getServer().getPluginManager().callEvent(e2);
+            plugin.getVanishStateMgr().updateCache();
         } catch (Exception e) {
             plugin.logException(e);
         }
