@@ -68,7 +68,7 @@ public class ActionBarMgr {
                 }
 
             }
-        }.runTaskTimer(plugin, 0, 2 * 20);
+        }.runTaskTimerAsynchronously(plugin, 0, 2 * 20);
     }
 
     private void sendActionBar(Player p, String bar) {
